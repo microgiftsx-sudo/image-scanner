@@ -9,6 +9,7 @@
   --primary-soft: #d9e7f5;
   --error: #b42318;
   --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 6px 18px rgba(15, 23, 42, 0.06);
 }
 
 html {
@@ -80,6 +81,12 @@ a {
   padding-bottom: 16px;
 }
 
+.headerBadges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .sectorTag {
   color: var(--primary);
   font-weight: 700;
@@ -102,9 +109,62 @@ a {
   font-weight: 700;
 }
 
+.statusBadgeAlt {
+  background: #edf6ef;
+  border-color: #cde6d2;
+  color: #1f6a3a;
+}
+
 .subtitle {
   color: var(--muted);
   margin-top: 6px;
+}
+
+.appGrid {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.adminPanel,
+.viewerPanel {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  background: #fcfdff;
+  box-shadow: var(--shadow-soft);
+}
+
+.adminPanel {
+  display: grid;
+  gap: 14px;
+}
+
+.adminPanel h2,
+.viewerPanel h2 {
+  color: var(--primary-dark);
+  font-size: 1.2rem;
+}
+
+.panelHint,
+.viewerPanelHeader p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.panelSection {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.panelSection h3 {
+  color: #1e3a5f;
+  font-size: 1rem;
 }
 
 .uploaderCard {
@@ -134,8 +194,8 @@ a {
 }
 
 .toolbar {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
   gap: 8px;
 }
 
@@ -147,6 +207,7 @@ a {
   padding: 9px 14px;
   cursor: pointer;
   font-weight: 600;
+  text-align: center;
 }
 
 .toolbar button:hover:not(:disabled) {
@@ -160,18 +221,28 @@ a {
 }
 
 .statusRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
 }
 
 .statusRow span {
   color: #334155;
-  font-size: 0.92rem;
-  padding: 6px 10px;
+  font-size: 0.89rem;
+  padding: 8px 10px;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 10px;
   background: #f8fafc;
+}
+
+.viewerPanel {
+  display: grid;
+  gap: 12px;
+}
+
+.viewerPanelHeader {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
 }
 
 .viewerFrame,
@@ -199,11 +270,22 @@ a {
 .viewerEmptyState {
   color: var(--muted);
   gap: 6px;
+  text-align: center;
+  padding: 20px;
+  transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease;
 }
 
 .viewerEmptyState p {
   color: var(--foreground);
   font-weight: 600;
+}
+
+.viewerEmptyStateDragActive {
+  border-color: var(--primary);
+  background:
+    radial-gradient(circle at top left, rgba(15, 76, 129, 0.15), transparent 45%),
+    #edf5ff;
+  transform: scale(1.01);
 }
 
 @media (max-width: 640px) {
@@ -217,5 +299,13 @@ a {
 
   .govHeader {
     flex-direction: column;
+  }
+
+  .appGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    grid-template-columns: 1fr;
   }
 }

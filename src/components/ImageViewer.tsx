@@ -6,14 +6,49 @@ import type { CSSProperties } from "react";
 type ImageViewerProps = {
   imageUrl: string | null;
   transformStyle: CSSProperties;
+  isDragActive: boolean;
+  onFileDrop: (file: File) => void;
+  onDragStateChange: (isActive: boolean) => void;
 };
 
-export function ImageViewer({ imageUrl, transformStyle }: ImageViewerProps) {
+export function ImageViewer({
+  imageUrl,
+  transformStyle,
+  isDragActive,
+  onFileDrop,
+  onDragStateChange,
+}: ImageViewerProps) {
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    onDragStateChange(true);
+  };
+
+  const handleDragLeave = () => {
+    onDragStateChange(false);
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    onDragStateChange(false);
+
+    const droppedFile = event.dataTransfer.files?.[0];
+    if (!droppedFile) {
+      return;
+    }
+
+    onFileDrop(droppedFile);
+  };
+
   if (!imageUrl) {
     return (
-      <div className="viewerEmptyState">
+      <div
+        className={`viewerEmptyState ${isDragActive ? "viewerEmptyStateDragActive" : ""}`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
         <p>لم يتم اختيار صورة بعد.</p>
-        <span>يرجى رفع صورة لبدء المعاينة.</span>
+        <span>اسحب الصورة وأفلتها هنا، أو استخدم زر الرفع من مركز التحكم.</span>
       </div>
     );
   }

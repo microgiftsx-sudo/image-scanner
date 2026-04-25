@@ -2,22 +2,26 @@
 
 type ViewerToolbarProps = {
   disabled?: boolean;
+  isSaving?: boolean;
   onRotateClockwise: () => void;
   onFlipHorizontal: () => void;
   onFlipVertical: () => void;
   onZoomIn: () => void;
   onZoomOut: () => void;
   onReset: () => void;
+  onSaveImage: () => void;
 };
 
 export function ViewerToolbar({
   disabled = false,
+  isSaving = false,
   onRotateClockwise,
   onFlipHorizontal,
   onFlipVertical,
   onZoomIn,
   onZoomOut,
   onReset,
+  onSaveImage,
 }: ViewerToolbarProps) {
   return (
     <div className="toolbar">
@@ -38,6 +42,9 @@ export function ViewerToolbar({
       </button>
       <button type="button" onClick={onReset} disabled={disabled}>
         إعادة ضبط
+      </button>
+      <button type="button" onClick={onSaveImage} disabled={disabled || isSaving}>
+        {isSaving ? "جاري الحفظ..." : "حفظ الصورة"}
       </button>
     </div>
   );
