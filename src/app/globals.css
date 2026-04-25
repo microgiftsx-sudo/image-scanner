@@ -70,6 +70,7 @@ a {
   display: grid;
   gap: 18px;
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
 .govHeader {
@@ -97,6 +98,7 @@ a {
 .scannerCard h1 {
   font-size: 1.9rem;
   color: var(--primary-dark);
+  line-height: 1.25;
 }
 
 .statusBadge {
@@ -118,6 +120,7 @@ a {
 .subtitle {
   color: var(--muted);
   margin-top: 6px;
+  line-height: 1.65;
 }
 
 .appGrid {
@@ -151,6 +154,7 @@ a {
 .viewerPanelHeader p {
   color: var(--muted);
   font-size: 0.92rem;
+  line-height: 1.65;
 }
 
 .panelSection {
@@ -208,6 +212,7 @@ a {
   cursor: pointer;
   font-weight: 600;
   text-align: center;
+  min-height: 40px;
 }
 
 .toolbar button:hover:not(:disabled) {
@@ -233,6 +238,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 10px;
   background: #f8fafc;
+  overflow-wrap: anywhere;
 }
 
 .viewerPanel {
@@ -288,23 +294,121 @@ a {
   transform: scale(1.01);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 992px) {
   .pageContainer {
-    padding: 12px;
+    padding: 24px 16px;
   }
 
   .scannerCard {
-    padding: 16px;
-  }
-
-  .govHeader {
-    flex-direction: column;
+    padding: 18px;
+    border-radius: 14px;
   }
 
   .appGrid {
     grid-template-columns: 1fr;
   }
 
+  .adminPanel,
+  .viewerPanel {
+    padding: 14px;
+  }
+
+  .toolbar {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+  }
+
+  .viewerFrame,
+  .viewerEmptyState {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pageContainer {
+    padding: 10px;
+  }
+
+  .scannerCard {
+    padding: 12px;
+    border-radius: 12px;
+    gap: 12px;
+  }
+
+  .govHeader {
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 12px;
+  }
+
+  .scannerCard h1 {
+    font-size: 1.35rem;
+  }
+
+  .sectorTag {
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .appGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .adminPanel,
+  .viewerPanel {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .panelSection {
+    padding: 10px;
+  }
+
+  .panelSection h3,
+  .adminPanel h2,
+  .viewerPanel h2 {
+    font-size: 1rem;
+  }
+
+  .uploaderInput {
+    padding: 10px;
+    font-size: 0.92rem;
+  }
+
+  .toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .toolbar button {
+    width: 100%;
+    font-size: 0.88rem;
+    padding: 8px 10px;
+    min-height: 38px;
+  }
+
+  .statusRow span {
+    font-size: 0.85rem;
+    padding: 7px 9px;
+  }
+
+  .viewerFrame,
+  .viewerEmptyState {
+    min-height: 260px;
+    border-radius: 10px;
+  }
+
+  .viewerEmptyState {
+    font-size: 0.9rem;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 420px) {
   .toolbar {
     grid-template-columns: 1fr;
   }
