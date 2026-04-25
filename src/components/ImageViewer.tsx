@@ -7,16 +7,26 @@ type ImageViewerProps = {
   imageUrl: string | null;
   transformStyle: CSSProperties;
   isDragActive: boolean;
+  isPanning: boolean;
   onFileDrop: (file: File) => void;
   onDragStateChange: (isActive: boolean) => void;
+  onWheelZoom: (deltaY: number) => void;
+  onPanStart: (x: number, y: number) => void;
+  onPanMove: (x: number, y: number) => void;
+  onPanEnd: () => void;
 };
 
 export function ImageViewer({
   imageUrl,
   transformStyle,
   isDragActive,
+  isPanning,
   onFileDrop,
   onDragStateChange,
+  onWheelZoom,
+  onPanStart,
+  onPanMove,
+  onPanEnd,
 }: ImageViewerProps) {
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -39,6 +49,19 @@ export function ImageViewer({
     onFileDrop(droppedFile);
   };
 
+  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    onWheelZoom(event.deltaY);
+  };
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    onPanStart(event.clientX, event.clientY);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    onPanMove(event.clientX, event.clientY);
+  };
+
   if (!imageUrl) {
     return (
       <div
@@ -54,7 +77,14 @@ export function ImageViewer({
   }
 
   return (
-    <div className="viewerFrame">
+    <div
+      className={`viewerFrame ${isPanning ? "viewerFramePanning" : ""}`}
+      onWheel={handleWheel}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={onPanEnd}
+      onPointerLeave={onPanEnd}
+    >
       <Image
         src={imageUrl}
         alt="Uploaded preview"

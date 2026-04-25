@@ -14,6 +14,8 @@ const INITIAL_TRANSFORMS: ImageTransforms = {
 const ZOOM_STEP = 0.1;
 const MIN_SCALE = 0.2;
 const MAX_SCALE = 3;
+const MIN_ROTATION = 0;
+const MAX_ROTATION = 360;
 
 export function useImageTransforms() {
   const [transforms, setTransforms] = useState<ImageTransforms>(INITIAL_TRANSFORMS);
@@ -48,6 +50,34 @@ export function useImageTransforms() {
     setTransforms(INITIAL_TRANSFORMS);
   };
 
+  const setScale = (scale: number) => {
+    setTransforms((current) => ({
+      ...current,
+      scale: Math.max(MIN_SCALE, Math.min(MAX_SCALE, Number(scale.toFixed(2)))),
+    }));
+  };
+
+  const setRotation = (rotation: number) => {
+    setTransforms((current) => ({
+      ...current,
+      rotation: Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, Math.round(rotation))),
+    }));
+  };
+
+  const setFlipX = (enabled: boolean) => {
+    setTransforms((current) => ({
+      ...current,
+      flipX: enabled,
+    }));
+  };
+
+  const setFlipY = (enabled: boolean) => {
+    setTransforms((current) => ({
+      ...current,
+      flipY: enabled,
+    }));
+  };
+
   const transformStyle = useMemo<CSSProperties>(() => {
     const xScale = transforms.flipX ? -transforms.scale : transforms.scale;
     const yScale = transforms.flipY ? -transforms.scale : transforms.scale;
@@ -68,6 +98,10 @@ export function useImageTransforms() {
       zoomIn,
       zoomOut,
       reset,
+      setScale,
+      setRotation,
+      setFlipX,
+      setFlipY,
     },
   };
 }

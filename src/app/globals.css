@@ -197,6 +197,11 @@ a {
   font-weight: 500;
 }
 
+.toolbarWrap {
+  display: grid;
+  gap: 10px;
+}
+
 .toolbar {
   display: grid;
   grid-template-columns: repeat(2, minmax(120px, 1fr));
@@ -223,6 +228,50 @@ a {
 .toolbar button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.sliderGroup {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f8fbff;
+  padding: 10px;
+}
+
+.sliderGroup label {
+  display: grid;
+  gap: 6px;
+  color: #1f3654;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.sliderGroup input[type="range"] {
+  width: 100%;
+}
+
+.checkboxGroup {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f8fbff;
+  padding: 10px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1f3654;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.checkboxRow input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
 }
 
 .statusRow {
@@ -267,6 +316,12 @@ a {
 
 .viewerFrame {
   position: relative;
+  cursor: grab;
+  touch-action: none;
+}
+
+.viewerFramePanning {
+  cursor: grabbing;
 }
 
 .viewerImage {
@@ -292,6 +347,105 @@ a {
     radial-gradient(circle at top left, rgba(15, 76, 129, 0.15), transparent 45%),
     #edf5ff;
   transform: scale(1.01);
+}
+
+.cropModalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.56);
+  display: grid;
+  place-items: center;
+  z-index: 1100;
+  padding: 16px;
+}
+
+.cropModalCard {
+  width: min(900px, 100%);
+  max-height: 92vh;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.cropModalHeader h3 {
+  color: var(--primary-dark);
+  margin-bottom: 4px;
+}
+
+.cropModalHeader p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.cropImageArea {
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px dashed #9db9d7;
+  background: #eef5ff;
+}
+
+.cropModalImage {
+  object-fit: contain;
+}
+
+.cropSelection {
+  position: absolute;
+  border: 2px solid #0f4c81;
+  background: rgba(15, 76, 129, 0.12);
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.25);
+}
+
+.cropHandle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  background: #0f4c81;
+  cursor: nwse-resize;
+}
+
+.cropHandleTopLeft {
+  top: -7px;
+  left: -7px;
+}
+
+.cropHandleTopRight {
+  top: -7px;
+  right: -7px;
+  cursor: nesw-resize;
+}
+
+.cropHandleBottomLeft {
+  bottom: -7px;
+  left: -7px;
+  cursor: nesw-resize;
+}
+
+.cropHandleBottomRight {
+  bottom: -7px;
+  right: -7px;
+}
+
+.cropModalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cropModalActions button {
+  border: 1px solid #c0d0e2;
+  background: #fff;
+  color: var(--primary-dark);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 600;
 }
 
 @media (max-width: 992px) {
@@ -405,6 +559,10 @@ a {
   .viewerEmptyState {
     font-size: 0.9rem;
     padding: 14px;
+  }
+
+  .cropImageArea {
+    min-height: 300px;
   }
 }
 
