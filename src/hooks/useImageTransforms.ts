@@ -16,6 +16,22 @@ const MIN_SCALE = 0.2;
 const MAX_SCALE = 3;
 const MIN_ROTATION = 0;
 const MAX_ROTATION = 360;
+const SNAP_THRESHOLD_DEGREES = 6;
+const SNAP_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315, 360];
+
+function getSnappedRotation(rotation: number): number {
+  const nearestAngle = SNAP_ANGLES.reduce((closest, angle) => {
+    const currentDistance = Math.abs(rotation - angle);
+    const bestDistance = Math.abs(rotation - closest);
+    return currentDistance < bestDistance ? angle : closest;
+  }, SNAP_ANGLES[0]);
+
+  if (Math.abs(rotation - nearestAngle) <= SNAP_THRESHOLD_DEGREES) {
+    return nearestAngle;
+  }
+
+  return rotation;
+}
 
 export function useImageTransforms() {
   const [transforms, setTransforms] = useState<ImageTransforms>(INITIAL_TRANSFORMS);
@@ -58,9 +74,12 @@ export function useImageTransforms() {
   };
 
   const setRotation = (rotation: number) => {
+    const clampedRotation = Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, Math.round(rotation)));
+    const snappedRotation = getSnappedRotation(clampedRotation);
+
     setTransforms((current) => ({
       ...current,
-      rotation: Math.max(MIN_ROTATION, Math.min(MAX_ROTATION, Math.round(rotation))),
+      rotation: snappedRotation,
     }));
   };
 

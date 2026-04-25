@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
 
 type ImageViewerProps = {
@@ -28,6 +29,26 @@ export function ImageViewer({
   onPanMove,
   onPanEnd,
 }: ImageViewerProps) {
+  const viewerFrameRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const viewerFrame = viewerFrameRef.current;
+    if (!viewerFrame) {
+      return;
+    }
+
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      onWheelZoom(event.deltaY);
+    };
+
+    viewerFrame.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      viewerFrame.removeEventListener("wheel", handleWheel);
+    };
+  }, [onWheelZoom]);
+
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     onDragStateChange(true);
@@ -47,11 +68,6 @@ export function ImageViewer({
     }
 
     onFileDrop(droppedFile);
-  };
-
-  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    onWheelZoom(event.deltaY);
   };
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -78,8 +94,8 @@ export function ImageViewer({
 
   return (
     <div
+      ref={viewerFrameRef}
       className={`viewerFrame ${isPanning ? "viewerFramePanning" : ""}`}
-      onWheel={handleWheel}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={onPanEnd}
