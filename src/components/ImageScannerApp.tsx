@@ -271,9 +271,6 @@ export function ImageScannerApp() {
           <div>
             <p className="sectorTag">منصة الخدمات الرقمية - وحدة المعالجة البصرية</p>
             <h1>نظام فحص الصور</h1>
-            <p className="subtitle">
-              لوحة تشغيل مؤسسية لمراجعة الصور الواردة واتخاذ إجراءات الفحص الأولية بسرعة ودقة.
-            </p>
           </div>
         </div>
 

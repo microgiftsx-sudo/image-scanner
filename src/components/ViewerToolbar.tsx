@@ -31,6 +31,8 @@ export function ViewerToolbar({
   onReset,
   onSaveImage,
 }: ViewerToolbarProps) {
+  const iconSize = 18;
+
   return (
     <div className="toolbarWrap">
       <div className="sliderGroup">
@@ -61,26 +63,46 @@ export function ViewerToolbar({
         </label>
       </div>
 
-      <div className="checkboxGroup">
-        <label className="checkboxRow">
-          <input
-            type="checkbox"
-            checked={flipX}
-            onChange={(event) => onFlipXChange(event.target.checked)}
-            disabled={disabled}
-          />
-          <span>القلب الأفقي: {flipX ? "مفعل" : "غير مفعل"}</span>
-        </label>
+      <div className="iconToggleGroup">
+        <button
+          type="button"
+          className={`iconToggleButton ${flipX ? "active" : ""}`}
+          onClick={() => onFlipXChange(!flipX)}
+          disabled={disabled}
+          aria-pressed={flipX}
+        >
+          <svg viewBox="0 0 24 24" width={iconSize} height={iconSize} aria-hidden="true">
+            <path
+              d="M4 12h6m0 0-2.5-2.5M10 12 7.5 14.5M14 6h6v12h-6zM12 4v16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span>قلب أفقي</span>
+        </button>
 
-        <label className="checkboxRow">
-          <input
-            type="checkbox"
-            checked={flipY}
-            onChange={(event) => onFlipYChange(event.target.checked)}
-            disabled={disabled}
-          />
-          <span>القلب العمودي: {flipY ? "مفعل" : "غير مفعل"}</span>
-        </label>
+        <button
+          type="button"
+          className={`iconToggleButton ${flipY ? "active" : ""}`}
+          onClick={() => onFlipYChange(!flipY)}
+          disabled={disabled}
+          aria-pressed={flipY}
+        >
+          <svg viewBox="0 0 24 24" width={iconSize} height={iconSize} aria-hidden="true">
+            <path
+              d="M12 4v6m0 0-2.5-2.5M12 10l2.5-2.5M6 14h12v6H6zM4 12h16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span>قلب عمودي</span>
+        </button>
       </div>
 
       <div className="toolbar">
@@ -91,7 +113,17 @@ export function ViewerToolbar({
           {isSaving ? "جاري الحفظ..." : "حفظ الصورة"}
         </button>
         <button type="button" onClick={onOpenCrop} disabled={disabled}>
-          قص
+          <svg viewBox="0 0 24 24" width={iconSize} height={iconSize} aria-hidden="true">
+            <path
+              d="M6 3v12a3 3 0 0 0 3 3h12M18 21V9a3 3 0 0 0-3-3H3"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span>قص</span>
         </button>
       </div>
     </div>
